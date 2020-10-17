@@ -15,7 +15,7 @@ interface PokeService {
     suspend fun searchPokemon(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    )
+    ): PokemonSearchResponse
 
     companion object {
         private const val BASE_URL = "https://pokeapi.co/api/v2/"
