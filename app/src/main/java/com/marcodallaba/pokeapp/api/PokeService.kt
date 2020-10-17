@@ -1,5 +1,7 @@
 package com.marcodallaba.pokeapp.api
 
+import com.marcodallaba.pokeapp.model.PokemonDetailResponse
+import com.marcodallaba.pokeapp.model.PokemonSearchResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -7,15 +9,19 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PokeService {
 
     @GET("pokemon")
-    suspend fun searchPokemon(
+    suspend fun getPokemonList(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
     ): PokemonSearchResponse
+
+    @GET("api/v2/pokemon/{name}")
+    fun getPokemonDetail(@Path("name") name: String): PokemonDetailResponse
 
     companion object {
         private const val BASE_URL = "https://pokeapi.co/api/v2/"

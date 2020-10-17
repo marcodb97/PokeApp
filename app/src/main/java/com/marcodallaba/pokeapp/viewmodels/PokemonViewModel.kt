@@ -4,16 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.marcodallaba.pokeapp.api.PokemonBase
+import com.marcodallaba.pokeapp.model.PokemonBase
 import com.marcodallaba.pokeapp.data.PokemonRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
 @ExperimentalCoroutinesApi
-class SearchPokemonViewModel(private val repository: PokemonRepository) : ViewModel() {
+class PokemonViewModel(private val repository: PokemonRepository) : ViewModel() {
 
-    fun searchPokemon(): Flow<PagingData<PokemonBase>> {
-        return repository.getSearchResultStream()
+    fun loadPokemon(): Flow<PagingData<PokemonBase>> {
+        return repository.getResultStream()
             .cachedIn(viewModelScope)
     }
 }

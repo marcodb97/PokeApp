@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.marcodallaba.pokeapp.api.PokemonBase
+import com.marcodallaba.pokeapp.model.PokemonBase
 
 @Database(
     entities = [PokemonBase::class, RemoteKeys::class],

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.marcodallaba.pokeapp.R
-import com.marcodallaba.pokeapp.api.PokemonBase
+import com.marcodallaba.pokeapp.model.PokemonBase
 
 /**
  * View Holder for a [PokemonBase] RecyclerView list item.

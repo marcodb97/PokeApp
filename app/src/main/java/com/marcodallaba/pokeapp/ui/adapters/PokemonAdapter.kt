@@ -3,7 +3,7 @@ package com.marcodallaba.pokeapp.ui.adapters
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.marcodallaba.pokeapp.api.PokemonBase
+import com.marcodallaba.pokeapp.model.PokemonBase
 import com.marcodallaba.pokeapp.ui.viewholders.PokemonViewHolder
 
 /**

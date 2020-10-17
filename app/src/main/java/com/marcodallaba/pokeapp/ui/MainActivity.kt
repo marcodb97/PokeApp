@@ -2,21 +2,19 @@ package com.marcodallaba.pokeapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.map
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.marcodallaba.pokeapp.Injection
 import com.marcodallaba.pokeapp.R
 import com.marcodallaba.pokeapp.databinding.ActivityMainBinding
 import com.marcodallaba.pokeapp.ui.adapters.PokemonAdapter
 import com.marcodallaba.pokeapp.ui.adapters.PokemonLoadStateAdapter
-import com.marcodallaba.pokeapp.viewmodels.SearchPokemonViewModel
+import com.marcodallaba.pokeapp.viewmodels.PokemonViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +24,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var searchPokemonViewModel: SearchPokemonViewModel
+    private lateinit var pokemonViewModel: PokemonViewModel
     private val adapter = PokemonAdapter()
 
     private var searchJob: Job? = null
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            searchPokemonViewModel.searchPokemon().collectLatest {
+            pokemonViewModel.loadPokemon().collectLatest {
                 adapter.submitData(it)
             }
         }
@@ -46,8 +44,8 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // get the view model
-        searchPokemonViewModel = ViewModelProvider(this, Injection.provideViewModelFactory(this))
-            .get(SearchPokemonViewModel::class.java)
+        pokemonViewModel = ViewModelProvider(this, Injection.provideViewModelFactory(this))
+            .get(PokemonViewModel::class.java)
 
         // add dividers between RecyclerView's row items
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)

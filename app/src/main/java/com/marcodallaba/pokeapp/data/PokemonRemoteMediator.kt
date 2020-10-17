@@ -6,7 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.marcodallaba.pokeapp.api.PokeService
-import com.marcodallaba.pokeapp.api.PokemonBase
+import com.marcodallaba.pokeapp.model.PokemonBase
 import com.marcodallaba.pokeapp.db.PokemonDatabase
 import com.marcodallaba.pokeapp.db.RemoteKeys
 import retrofit2.HttpException
@@ -39,7 +39,7 @@ class PokemonRemoteMediator(
         }
 
         try {
-            val apiResponse = service.searchPokemon(offset, state.config.pageSize)
+            val apiResponse = service.getPokemonList(offset, state.config.pageSize)
 
             val pokemon = apiResponse.results
             val endOfPaginationReached = pokemon.isEmpty()

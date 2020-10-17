@@ -12,9 +12,9 @@ class ViewModelFactory(private val repository: PokemonRepository) : ViewModelPro
 
     @ExperimentalCoroutinesApi
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SearchPokemonViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(PokemonViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SearchPokemonViewModel(repository) as T
+            return PokemonViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

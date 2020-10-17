@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.marcodallaba.pokeapp.api.PokeService
-import com.marcodallaba.pokeapp.api.PokemonBase
+import com.marcodallaba.pokeapp.model.PokemonBase
 import com.marcodallaba.pokeapp.db.PokemonDatabase
 import kotlinx.coroutines.flow.Flow
 
@@ -13,7 +13,7 @@ class PokemonRepository(
     private val database: PokemonDatabase
 ) {
 
-    fun getSearchResultStream(): Flow<PagingData<PokemonBase>> {
+    fun getResultStream(): Flow<PagingData<PokemonBase>> {
 
         val pagingSourceFactory = { database.pokemonDao().pokemonOrderedById() }
 

@@ -1,4 +1,4 @@
-package com.marcodallaba.pokeapp.api
+package com.marcodallaba.pokeapp.model
 
 
 data class PokemonSearchResponse(
