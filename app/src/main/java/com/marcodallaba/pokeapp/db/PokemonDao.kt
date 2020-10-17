@@ -17,6 +17,6 @@ interface PokemonDao {
     fun pokemonOrderedByUrl(): PagingSource<Int, PokemonBase>
 
     @Query("DELETE FROM pokemon")
-    suspend fun clearRepos()
+    suspend fun clearPokemon()
 
 }
