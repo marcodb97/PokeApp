@@ -1,8 +1,16 @@
 package com.marcodallaba.pokeapp.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "pokemonDetail")
 data class PokemonDetailResponse(
     val id: Int,
-    val name: String,
+    @PrimaryKey val name: String,
     val forms: List<PokemonForms>,
-    val types: List<PokemonType>
-)
+    val types: List<PokemonTypeWrapper>,
+    val sprites: Sprites,
+    val stats: List<Stat>
+) {
+
+}

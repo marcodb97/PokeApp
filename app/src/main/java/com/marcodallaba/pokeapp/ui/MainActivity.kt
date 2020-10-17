@@ -2,6 +2,7 @@ package com.marcodallaba.pokeapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -11,6 +12,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.marcodallaba.pokeapp.Injection
 import com.marcodallaba.pokeapp.R
+import com.marcodallaba.pokeapp.data.PokemonRepository
 import com.marcodallaba.pokeapp.databinding.ActivityMainBinding
 import com.marcodallaba.pokeapp.ui.adapters.PokemonAdapter
 import com.marcodallaba.pokeapp.ui.adapters.PokemonLoadStateAdapter
@@ -21,18 +23,19 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var pokemonViewModel: PokemonViewModel
-    private val adapter = PokemonAdapter()
+    private val adapter = PokemonAdapter(this)
 
+    private var loadJob: Job? = null
     private var searchJob: Job? = null
 
-    private fun search() {
+    private fun loadPokemon() {
         // Make sure we cancel the previous job before creating a new one
-        searchJob?.cancel()
-        searchJob = lifecycleScope.launch {
+        loadJob?.cancel()
+        loadJob = lifecycleScope.launch {
             pokemonViewModel.loadPokemon().collectLatest {
                 adapter.submitData(it)
             }
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         initAdapter()
 
-        search()
+        loadPokemon()
 
         binding.retryButton.setOnClickListener { adapter.retry() }
     }
@@ -82,6 +85,20 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
 
+    override fun onClick(pokemonName: String) {
+        // Make sure we cancel the previous job before creating a new one
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            val pokemonDetail = pokemonViewModel.getPokemonDetail(pokemonName)
+            if (pokemonDetail is PokemonRepository.PokemonDetailResult.Success) {
+                pokemonDetail.result.name.let { Log.e(TAG, it) }
+            }
+        }
+    }
+
+    companion object {
+        private val TAG = MainActivity::class.java.simpleName
     }
 }

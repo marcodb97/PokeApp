@@ -9,15 +9,20 @@ import com.marcodallaba.pokeapp.ui.viewholders.PokemonViewHolder
 /**
  * Adapter for the list of pokemon.
  */
-class PokemonAdapter : PagingDataAdapter<PokemonBase, PokemonViewHolder>(UI_MODEL_COMPARATOR) {
+class PokemonAdapter(private val onPokemonClickListener: OnPokemonClickListener) :
+    PagingDataAdapter<PokemonBase, PokemonViewHolder>(UI_MODEL_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        return PokemonViewHolder.create(parent)
+        return PokemonViewHolder.create(parent, onPokemonClickListener)
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         val pokemon = getItem(position)
         holder.bind(pokemon)
+    }
+
+    interface OnPokemonClickListener {
+        fun onClick(pokemonName: String)
     }
 
     companion object {

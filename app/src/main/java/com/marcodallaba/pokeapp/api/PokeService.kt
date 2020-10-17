@@ -20,8 +20,8 @@ interface PokeService {
         @Query("limit") limit: Int
     ): PokemonSearchResponse
 
-    @GET("api/v2/pokemon/{name}")
-    fun getPokemonDetail(@Path("name") name: String): PokemonDetailResponse
+    @GET("pokemon/{name}")
+    suspend fun getPokemonDetail(@Path("name") name: String): PokemonDetailResponse
 
     companion object {
         private const val BASE_URL = "https://pokeapi.co/api/v2/"
