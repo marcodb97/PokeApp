@@ -10,7 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
 @ExperimentalCoroutinesApi
-class SearchRepositoriesViewModel(private val repository: PokemonRepository) : ViewModel() {
+class SearchPokemonViewModel(private val repository: PokemonRepository) : ViewModel() {
 
     fun searchPokemon(): Flow<PagingData<PokemonBase>> {
         return repository.getSearchResultStream()
