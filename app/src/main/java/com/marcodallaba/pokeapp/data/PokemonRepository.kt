@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import com.marcodallaba.pokeapp.api.PokeService
 import com.marcodallaba.pokeapp.model.PokemonBase
 import com.marcodallaba.pokeapp.db.PokemonDatabase
+import com.marcodallaba.pokeapp.model.PokemonDetail
 import com.marcodallaba.pokeapp.model.PokemonDetailResponse
 import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
@@ -33,8 +34,15 @@ class PokemonRepository(
 
 
     suspend fun getPokemonDetail(name: String): PokemonDetailResult {
+        var pokemonDetail = database.pokemonDetailDao().getPokemonByName(name)
+
+        if (pokemonDetail != null) {
+            return PokemonDetailResult.Success(pokemonDetail)
+        }
         return try {
-            PokemonDetailResult.Success(service.getPokemonDetail(name))
+            pokemonDetail = PokemonDetailMapper.map(service.getPokemonDetail(name))
+            database.pokemonDetailDao().insert(pokemonDetail)
+            PokemonDetailResult.Success(pokemonDetail)
         } catch (exception: IOException) {
             PokemonDetailResult.Error(exception)
         } catch (exception: HttpException) {
@@ -43,7 +51,7 @@ class PokemonRepository(
     }
 
     sealed class PokemonDetailResult {
-        data class Success(val result: PokemonDetailResponse) : PokemonDetailResult()
+        data class Success(val result: PokemonDetail) : PokemonDetailResult()
         data class Error(val throwable: Throwable?) : PokemonDetailResult()
     }
 

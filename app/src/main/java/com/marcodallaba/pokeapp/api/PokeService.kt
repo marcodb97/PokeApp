@@ -1,7 +1,7 @@
 package com.marcodallaba.pokeapp.api
 
 import com.marcodallaba.pokeapp.model.PokemonDetailResponse
-import com.marcodallaba.pokeapp.model.PokemonSearchResponse
+import com.marcodallaba.pokeapp.model.PokemonPageResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -18,7 +18,7 @@ interface PokeService {
     suspend fun getPokemonList(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): PokemonSearchResponse
+    ): PokemonPageResponse
 
     @GET("pokemon/{name}")
     suspend fun getPokemonDetail(@Path("name") name: String): PokemonDetailResponse

@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.marcodallaba.pokeapp.model.PokemonBase
+import com.marcodallaba.pokeapp.model.PokemonDetail
 
 @Database(
-    entities = [PokemonBase::class, RemoteKeys::class],
+    entities = [PokemonBase::class, RemoteKeys::class, PokemonDetail::class],
     version = 1,
     exportSchema = false
 )
@@ -15,6 +16,7 @@ abstract class PokemonDatabase : RoomDatabase() {
 
     abstract fun pokemonDao(): PokemonDao
     abstract fun remoteKeysDao(): RemoteKeysDao
+    abstract fun pokemonDetailDao() : PokemonDetailDao
 
     companion object {
 
