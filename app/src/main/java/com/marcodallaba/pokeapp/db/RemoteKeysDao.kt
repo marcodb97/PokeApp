@@ -11,8 +11,8 @@ interface RemoteKeysDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(remoteKey: List<RemoteKeys>)
 
-    @Query("SELECT * FROM remote_keys WHERE pokemonUrl = :pokemonUrl")
-    suspend fun remoteKeysPokemonUrl(pokemonUrl: String): RemoteKeys?
+    @Query("SELECT * FROM remote_keys WHERE pokemonId = :pokemonId")
+    suspend fun remoteKeysPokemonId(pokemonId: Int): RemoteKeys?
 
     @Query("DELETE FROM remote_keys")
     suspend fun clearRemoteKeys()

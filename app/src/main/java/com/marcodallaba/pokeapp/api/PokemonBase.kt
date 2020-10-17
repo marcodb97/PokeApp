@@ -6,5 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "pokemon")
 data class PokemonBase(
     var name: String,
-    @PrimaryKey var url: String
-)
+    var url: String
+) {
+    @PrimaryKey
+    var id: Int = url.drop(34).dropLast(1).toInt()
+}

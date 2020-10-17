@@ -18,7 +18,7 @@ object Injection {
      * Creates an instance of [PokemonRepository] based on the [PokeService] and a
      * local cache
      */
-    private fun provideGithubRepository(context: Context): PokemonRepository {
+    private fun providePokemonRepository(context: Context): PokemonRepository {
         return PokemonRepository(PokeService.create(), PokemonDatabase.getInstance(context))
     }
 
@@ -27,6 +27,6 @@ object Injection {
      * [ViewModel] objects.
      */
     fun provideViewModelFactory(context: Context): ViewModelProvider.Factory {
-        return ViewModelFactory(provideGithubRepository(context))
+        return ViewModelFactory(providePokemonRepository(context))
     }
 }

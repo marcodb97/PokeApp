@@ -24,10 +24,10 @@ class PokemonRemoteMediator(
         state: PagingState<Int, PokemonBase>
     ): MediatorResult {
 
-        val page = when (loadType) {
+        val offset = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
+                remoteKeys?.nextKey?.minus(state.config.pageSize) ?: STARTING_PAGE_INDEX
             }
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
@@ -39,7 +39,7 @@ class PokemonRemoteMediator(
         }
 
         try {
-            val apiResponse = service.searchPokemon(page, state.config.pageSize)
+            val apiResponse = service.searchPokemon(offset, state.config.pageSize)
 
             val pokemon = apiResponse.results
             val endOfPaginationReached = pokemon.isEmpty()
@@ -49,10 +49,10 @@ class PokemonRemoteMediator(
                     pokemonDatabase.remoteKeysDao().clearRemoteKeys()
                     pokemonDatabase.pokemonDao().clearPokemon()
                 }
-                val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
+                val prevKey = if (offset == STARTING_PAGE_INDEX) null else offset - state.config.pageSize
+                val nextKey = if (endOfPaginationReached) null else offset + state.config.pageSize
                 val keys = pokemon.map {
-                    RemoteKeys(pokemonUrl = it.url, prevKey = prevKey, nextKey = nextKey)
+                    RemoteKeys(pokemonId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 pokemonDatabase.remoteKeysDao().insertAll(keys)
                 pokemonDatabase.pokemonDao().insertAll(pokemon)
@@ -72,7 +72,7 @@ class PokemonRemoteMediator(
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { pokemon ->
                 // Get the remote keys of the last item retrieved
-                pokemonDatabase.remoteKeysDao().remoteKeysPokemonUrl(pokemonUrl = pokemon.url)
+                pokemonDatabase.remoteKeysDao().remoteKeysPokemonId(pokemonId = pokemon.id)
             }
     }
 
@@ -82,8 +82,8 @@ class PokemonRemoteMediator(
         // The paging library is trying to load data after the anchor position
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.url?.let { pokemonUrl ->
-                pokemonDatabase.remoteKeysDao().remoteKeysPokemonUrl(pokemonUrl = pokemonUrl)
+            state.closestItemToPosition(position)?.id?.let { pokemonUrl ->
+                pokemonDatabase.remoteKeysDao().remoteKeysPokemonId(pokemonId = pokemonUrl)
             }
         }
     }

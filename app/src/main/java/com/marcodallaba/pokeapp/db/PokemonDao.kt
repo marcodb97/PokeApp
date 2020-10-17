@@ -13,8 +13,8 @@ interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(pokemon: List<PokemonBase>)
 
-    @Query("SELECT * FROM pokemon ORDER BY url ASC")
-    fun pokemonOrderedByUrl(): PagingSource<Int, PokemonBase>
+    @Query("SELECT * FROM pokemon ORDER BY id ASC")
+    fun pokemonOrderedById(): PagingSource<Int, PokemonBase>
 
     @Query("DELETE FROM pokemon")
     suspend fun clearPokemon()

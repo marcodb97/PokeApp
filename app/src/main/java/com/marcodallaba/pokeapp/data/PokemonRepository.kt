@@ -15,7 +15,7 @@ class PokemonRepository(
 
     fun getSearchResultStream(): Flow<PagingData<PokemonBase>> {
 
-        val pagingSourceFactory = { database.pokemonDao().pokemonOrderedByUrl() }
+        val pagingSourceFactory = { database.pokemonDao().pokemonOrderedById() }
 
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
