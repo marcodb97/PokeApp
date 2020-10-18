@@ -14,7 +14,7 @@
             android:id="@+id/pokemon_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center_horizontal"

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.marcodallaba.pokeapp.Injection
 import com.marcodallaba.pokeapp.R
 import com.marcodallaba.pokeapp.data.PokemonRepository
@@ -24,7 +25,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
-class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener {
+class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var pokemonViewModel: PokemonViewModel
@@ -94,12 +95,16 @@ class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener 
         searchJob = lifecycleScope.launch {
             val pokemonDetail = pokemonViewModel.getPokemonDetail(pokemonName)
             if (pokemonDetail is PokemonRepository.PokemonDetailResult.Success) {
-                pokemonDetail.result.name.let { Log.e(TAG, it) }
+                val pokemonBottomSheetDialogFragment = PokemonBottomSheetDialogFragment(pokemonDetail = pokemonDetail.result)
+                pokemonBottomSheetDialogFragment.show(
+                    supportFragmentManager,
+                    PokemonBottomSheetDialogFragment::class.java.canonicalName
+                )
             }
         }
     }
 
     companion object {
-        private val TAG = MainActivity::class.java.simpleName
+        private val TAG = PokemonListActivity::class.java.simpleName
     }
 }

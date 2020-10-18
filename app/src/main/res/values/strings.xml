@@ -4,4 +4,11 @@
     <string name="no_results">No results 😓</string>
     <string name="unknown">\?</string>
     <string name="retry">Retry</string>
+    <string name="hp">HP: %s</string>
+    <string name="attack">ATTACK: %s</string>
+    <string name="defense">DEFENSE: %s</string>
+    <string name="special_attack">SPECIAL ATTACK: %s</string>
+    <string name="special_defense">SPECIAL DEFENSE: %s</string>
+    <string name="speed">SPEED: %s</string>
+
 </resources>
