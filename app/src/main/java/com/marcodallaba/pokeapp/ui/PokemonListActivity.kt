@@ -100,6 +100,8 @@ class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickLi
                     supportFragmentManager,
                     PokemonBottomSheetDialogFragment::class.java.canonicalName
                 )
+            } else if (pokemonDetail is PokemonRepository.PokemonDetailResult.Error){
+                Toast.makeText(this@PokemonListActivity, "\uD83D\uDE28 Wooops ${pokemonDetail.throwable}", Toast.LENGTH_LONG).show()
             }
         }
     }
