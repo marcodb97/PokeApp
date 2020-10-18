@@ -38,6 +38,7 @@ class PokemonBottomSheetDialogFragment(
         super.onViewCreated(view, savedInstanceState)
         Glide.with(this).load(pokemonDetail.frontPic).into(binding.imageView)
         binding.nameTextView.text = pokemonDetail.name.capitalize(Locale.ROOT)
+        binding.typeTextView.text = pokemonDetail.getTypesList()
         binding.hpTextView.text = getString(R.string.hp, pokemonDetail.hp.toString())
         binding.attackTextView.text = getString(R.string.attack, pokemonDetail.attack.toString())
         binding.defenseTextView.text = getString(R.string.defense, pokemonDetail.defense.toString())

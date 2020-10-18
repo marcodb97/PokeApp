@@ -18,7 +18,6 @@ data class PokemonType (
 
 class Sprites(
     val front_default: String,
-    val back_default: String
 )
 
 data class Stat(
