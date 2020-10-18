@@ -11,6 +11,7 @@ import com.marcodallaba.pokeapp.databinding.PokemonViewItemBinding
 import com.marcodallaba.pokeapp.model.PokemonBase
 import com.marcodallaba.pokeapp.ui.adapters.PokemonAdapter
 import com.marcodallaba.pokeapp.utils.setSafeOnClickListener
+import java.util.*
 
 /**
  * View Holder for a [PokemonBase] RecyclerView list item.
@@ -42,7 +43,7 @@ class PokemonViewHolder(
 
     private fun showPokemonData(pokemon: PokemonBase) {
         this.pokemon = pokemon
-        binding.pokemonName.text = "${pokemon.id} ${pokemon.name}"
+        binding.pokemonName.text = pokemon.name.capitalize(Locale.ROOT)
     }
 
     companion object {
