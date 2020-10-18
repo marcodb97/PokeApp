@@ -16,6 +16,7 @@ import com.marcodallaba.pokeapp.data.PokemonRepository
 import com.marcodallaba.pokeapp.databinding.ActivityMainBinding
 import com.marcodallaba.pokeapp.ui.adapters.PokemonAdapter
 import com.marcodallaba.pokeapp.ui.adapters.PokemonLoadStateAdapter
+import com.marcodallaba.pokeapp.utils.setSafeOnClickListener
 import com.marcodallaba.pokeapp.viewmodels.PokemonViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener 
 
         loadPokemon()
 
-        binding.retryButton.setOnClickListener { adapter.retry() }
+        binding.retryButton.setSafeOnClickListener { adapter.retry() }
     }
 
     private fun initAdapter() {

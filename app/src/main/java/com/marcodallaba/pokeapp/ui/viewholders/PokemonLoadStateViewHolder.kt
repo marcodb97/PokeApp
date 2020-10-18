@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.marcodallaba.pokeapp.databinding.PokemonLoadStateFooterViewItemBinding
+import com.marcodallaba.pokeapp.utils.setSafeOnClickListener
 
 class PokemonLoadStateViewHolder(
     private val binding: PokemonLoadStateFooterViewItemBinding,
@@ -13,7 +14,7 @@ class PokemonLoadStateViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.retryButton.setOnClickListener { retry.invoke() }
+        binding.retryButton.setSafeOnClickListener { retry.invoke() }
     }
 
     fun bind(loadState: LoadState) {

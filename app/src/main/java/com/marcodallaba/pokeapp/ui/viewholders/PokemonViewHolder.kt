@@ -10,6 +10,7 @@ import com.marcodallaba.pokeapp.R
 import com.marcodallaba.pokeapp.databinding.PokemonViewItemBinding
 import com.marcodallaba.pokeapp.model.PokemonBase
 import com.marcodallaba.pokeapp.ui.adapters.PokemonAdapter
+import com.marcodallaba.pokeapp.utils.setSafeOnClickListener
 
 /**
  * View Holder for a [PokemonBase] RecyclerView list item.
@@ -23,7 +24,7 @@ class PokemonViewHolder(
     private var pokemon: PokemonBase? = null
 
     init {
-        binding.root.setOnClickListener {
+        binding.root.setSafeOnClickListener {
             pokemon?.let {
                 onPokemonClickListener.onClick(pokemonName = it.name)
             }
