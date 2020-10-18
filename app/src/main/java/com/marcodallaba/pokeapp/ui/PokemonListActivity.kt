@@ -2,16 +2,12 @@ package com.marcodallaba.pokeapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.marcodallaba.pokeapp.Injection
 import com.marcodallaba.pokeapp.R
 import com.marcodallaba.pokeapp.data.PokemonRepository
 import com.marcodallaba.pokeapp.databinding.ActivityMainBinding
@@ -23,6 +19,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 @ExperimentalCoroutinesApi
 class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener {
@@ -49,8 +46,8 @@ class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickLi
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // get the view model
-        pokemonViewModel = ViewModelProvider(this, Injection.provideViewModelFactory(this))
-            .get(PokemonViewModel::class.java)
+        pokemonViewModel = getViewModel()
+
 
         // add dividers between RecyclerView's row items
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
@@ -95,13 +92,18 @@ class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickLi
         searchJob = lifecycleScope.launch {
             val pokemonDetail = pokemonViewModel.getPokemonDetail(pokemonName)
             if (pokemonDetail is PokemonRepository.PokemonDetailResult.Success) {
-                val pokemonBottomSheetDialogFragment = PokemonBottomSheetDialogFragment(pokemonDetail = pokemonDetail.result)
+                val pokemonBottomSheetDialogFragment =
+                    PokemonBottomSheetDialogFragment(pokemonDetail = pokemonDetail.result)
                 pokemonBottomSheetDialogFragment.show(
                     supportFragmentManager,
                     PokemonBottomSheetDialogFragment::class.java.canonicalName
                 )
-            } else if (pokemonDetail is PokemonRepository.PokemonDetailResult.Error){
-                Toast.makeText(this@PokemonListActivity, "\uD83D\uDE28 Wooops ${pokemonDetail.throwable}", Toast.LENGTH_LONG).show()
+            } else if (pokemonDetail is PokemonRepository.PokemonDetailResult.Error) {
+                Toast.makeText(
+                    this@PokemonListActivity,
+                    "\uD83D\uDE28 Wooops ${pokemonDetail.throwable}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
