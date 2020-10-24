@@ -1,8 +1,8 @@
 package com.marcodallaba.pokeapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
@@ -19,13 +19,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @ExperimentalCoroutinesApi
 class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var pokemonViewModel: PokemonViewModel
+    private val pokemonViewModel: PokemonViewModel by viewModel()
     private val adapter = PokemonAdapter(this)
 
     private var loadJob: Job? = null
@@ -44,10 +44,6 @@ class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        // get the view model
-        pokemonViewModel = getViewModel()
-
 
         // add dividers between RecyclerView's row items
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
