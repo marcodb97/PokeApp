@@ -21,7 +21,7 @@ data class PokemonDetail(
     fun getTypesList(): String {
         var ret = ""
         types.forEach {
-            ret+=PokemonTypeMapper.map(it)
+            ret += PokemonTypeMapper.map(it)
         }
         return ret
     }

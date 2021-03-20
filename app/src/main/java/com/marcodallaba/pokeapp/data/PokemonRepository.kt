@@ -38,7 +38,7 @@ class PokemonRepository(
             return PokemonDetailResult.Success(pokemonDetail)
         }
         return try {
-            pokemonDetail = PokemonDetailMapper.map(service.getPokemonDetail(name))
+            pokemonDetail = service.getPokemonDetail(name).map()
             database.pokemonDetailDao().insert(pokemonDetail)
             PokemonDetailResult.Success(pokemonDetail)
         } catch (exception: IOException) {

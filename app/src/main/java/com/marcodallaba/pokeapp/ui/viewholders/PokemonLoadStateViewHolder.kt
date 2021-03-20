@@ -29,7 +29,8 @@ class PokemonLoadStateViewHolder(
     companion object {
         fun create(parent: ViewGroup, retry: () -> Unit): PokemonLoadStateViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = PokemonLoadStateFooterViewItemBinding.inflate(layoutInflater, parent, false)
+            val binding =
+                PokemonLoadStateFooterViewItemBinding.inflate(layoutInflater, parent, false)
             return PokemonLoadStateViewHolder(binding, retry)
         }
     }

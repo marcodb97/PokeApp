@@ -12,7 +12,10 @@ class PokemonLoadStateAdapter(
         holder.bind(loadState)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): PokemonLoadStateViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        loadState: LoadState
+    ): PokemonLoadStateViewHolder {
         return PokemonLoadStateViewHolder.create(parent, retry)
     }
 }
