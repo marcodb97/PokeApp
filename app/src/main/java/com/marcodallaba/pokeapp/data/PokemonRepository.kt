@@ -1,9 +1,6 @@
 package com.marcodallaba.pokeapp.data
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.RemoteMediator
+import androidx.paging.*
 import com.marcodallaba.pokeapp.api.PokeService
 import com.marcodallaba.pokeapp.model.PokemonBase
 import com.marcodallaba.pokeapp.db.PokemonDatabase
@@ -18,6 +15,7 @@ class PokemonRepository(
     private val database: PokemonDatabase
 ) {
 
+    @ExperimentalPagingApi
     fun getPokemonListStream(): Flow<PagingData<PokemonBase>> {
 
         val pagingSourceFactory = { database.pokemonDao().pokemonOrderedById() }

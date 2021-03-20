@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.marcodallaba.pokeapp.R
@@ -31,6 +32,7 @@ class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickLi
     private var loadJob: Job? = null
     private var searchJob: Job? = null
 
+    @ExperimentalPagingApi
     private fun loadPokemon() {
         // Make sure we cancel the previous job before creating a new one
         loadJob?.cancel()
@@ -41,6 +43,7 @@ class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickLi
         }
     }
 
+    @ExperimentalPagingApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
