@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.marcodallaba.pokeapp.R
 import com.marcodallaba.pokeapp.data.PokemonRepository
 import com.marcodallaba.pokeapp.databinding.ActivityMainBinding
 import com.marcodallaba.pokeapp.ui.adapters.PokemonAdapter
@@ -46,7 +44,7 @@ class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickLi
     @ExperimentalPagingApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
         // add dividers between RecyclerView's row items
         val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
@@ -57,6 +55,8 @@ class PokemonListActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickLi
         loadPokemon()
 
         binding.retryButton.setSafeOnClickListener { adapter.retry() }
+
+        setContentView(binding.root)
     }
 
     private fun initAdapter() {

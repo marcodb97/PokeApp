@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.marcodallaba.pokeapp.R
@@ -24,10 +23,9 @@ class PokemonBottomSheetDialogFragment(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(
+    ): View {
+        binding = PokemonBottomSheetDialogBinding.inflate(
             inflater,
-            R.layout.pokemon_bottom_sheet_dialog,
             container,
             false
         )
